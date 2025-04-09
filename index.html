@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive Image Forgery Detection</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Body Styling */
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: linear-gradient(to right, #000000, #4a148c);
+            color: #fff;
+            padding: 20px;
+        }
+
+        /* Welcome Message */
+        .welcome-message {
+            font-size: 2.4em;
+            font-weight: bold;
+            text-align: center;
+            color: #e3f2fd;
+            margin-bottom: 40px;
+        }
+
+        /* Section Heading */
+        .section-heading {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #d1c4e9;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        /* Carousel Container */
+        .carousel-container {
+            position: relative;
+            width: 90%;
+            max-width: 800px;
+            overflow: hidden;
+        }
+
+        /* Service Card Container */
+        .carousel {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        /* Individual Service Card */
+        .service-card {
+            min-width: 100%;
+            box-sizing: border-box;
+            padding: 30px;
+            background: linear-gradient(to bottom right, #f3e5f5, #e8eaf6);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            color: #333;
+        }
+
+        .service-title {
+            font-size: 1.5em;
+            color: #4a148c;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .service-description {
+            color: #5c5c5c;
+            font-size: 1em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* Upload Form Styling */
+        .upload-form {
+            display: inline-block;
+            width: 100%;
+            max-width: 250px;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 12px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        .upload-form:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .upload-form h2 {
+            font-size: 1.1em;
+            color: #4a148c;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .file-input {
+            width: 100%;
+            padding: 8px;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .btn-upload {
+            width: 100%;
+            padding: 10px;
+            font-size: 0.9em;
+            font-weight: bold;
+            color: #fff;
+            background-color: #8e24aa;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-upload:hover {
+            background-color: #6a1b9a;
+        }
+
+        /* Navigation Buttons */
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.1);
+            color: #fff;
+            border: none;
+            font-size: 2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 50%;
+        }
+
+        .nav-button:hover {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-left {
+            left: 10px;
+        }
+
+        .nav-right {
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Welcome Message -->
+    <div class="welcome-message">Welcome to the Comprehensive Image Forgery Detection using DL</div>
+
+    <!-- Section Heading -->
+    <div class="section-heading">Services</div>
+
+    <!-- Carousel Container -->
+    <div class="carousel-container">
+        <div class="carousel">
+
+            <!-- Tampering Detection Card -->
+            <div class="service-card">
+                <div class="service-title"><i class="fas fa-search"></i> Image Tampering Detection</div>
+                <p class="service-description">
+                    Image tampering detection using deep learning (DL) involves identifying alterations or manipulations in images, such as splicing, copy-move, or forgery. DL models, particularly convolutional neural networks (CNNs), are trained on large datasets of authentic and tampered images to recognize subtle inconsistencies. These models learn features that distinguish natural patterns from manipulated ones, enabling high accuracy in detection. Techniques such as transfer learning or using pre-trained models enhance detection capabilities. This approach is crucial in applications like digital forensics and media verification.
+                </p>
+                <form action="{{ url_for('predict_tampering') }}" method="post" enctype="multipart/form-data" class="upload-form">
+                    <h2><i class="fas fa-upload"></i> Upload Image</h2>
+                    <input type="file" name="image" accept="image/*" class="file-input" required>
+                    <button type="submit" class="btn-upload">Upload</button>
+                </form>
+            </div>
+
+            <!-- Splicing Detection Card -->
+            <div class="service-card">
+                <div class="service-title"><i class="fas fa-cut"></i> Image Splicing Detection</div>
+                <p class="service-description">
+                    Image splicing detection using deep learning (DL) involves training neural networks to identify regions in an image that have been manipulated or merged from multiple sources. The model learns to detect inconsistencies in texture, lighting, and edges that indicate tampering. Convolutional Neural Networks (CNNs) and more advanced architectures like Vision Transformers are often employed for feature extraction and analysis. The goal is to accurately classify and localize manipulated areas within an image. This approach enhances the ability to combat digital forgery and ensure image authenticity.
+                </p>
+                <form action="{{ url_for('predict_splicing') }}" method="post" enctype="multipart/form-data" class="upload-form">
+                    <h2><i class="fas fa-upload"></i> Upload Image</h2>
+                    <input type="file" name="image" accept="image/*" class="file-input" required>
+                    <button type="submit" class="btn-upload">Upload</button>
+                </form>
+            </div>
+
+            <!-- Deepfake Detection Card -->
+            <div class="service-card">
+                <div class="service-title"><i class="fas fa-mask"></i> Deepfake Detection</div>
+                <p class="service-description">
+                    Deepfake image detection using GANs (Generative Adversarial Networks) and deep learning involves creating models that identify manipulated media by distinguishing between real and synthetic content. GANs are leveraged to train detection algorithms by generating realistic fakes, helping the model learn the subtle differences. Deep learning networks, such as convolutional neural networks (CNNs), are often used to extract complex features from images. These models are trained on large datasets of genuine and deepfake images to enhance detection accuracy. This approach aims to counter increasingly sophisticated deepfake generation methods.
+                </p>
+                <form action="{{ url_for('predict_deepfake') }}" method="post" enctype="multipart/form-data" class="upload-form">
+                    <h2><i class="fas fa-upload"></i> Upload Image</h2>
+                    <input type="file" name="image" accept="image/*" class="file-input" required>
+                    <button type="submit" class="btn-upload">Upload</button>
+                </form>
+            </div>
+
+        </div>
+
+        <!-- Navigation Buttons -->
+        <button class="nav-button nav-left" onclick="prevSlide()">&#10094;</button>
+        <button class="nav-button nav-right" onclick="nextSlide()">&#10095;</button>
+    </div>
+
+    <script>
+        let currentIndex = 0;
+
+        function updateCarousel() {
+            const carousel = document.querySelector('.carousel');
+            const cardWidth = document.querySelector('.service-card').offsetWidth;
+            carousel.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+        }
+
+        function nextSlide() {
+            const cards = document.querySelectorAll('.service-card');
+            if (currentIndex < cards.length - 1) {
+                currentIndex++;
+                updateCarousel();
+            }
+        }
+
+        function prevSlide() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateCarousel();
+            }
+        }
+    </script>
+
+</body>
+</html>
